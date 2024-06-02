@@ -2,23 +2,40 @@ package com.alura.desafio.LiterAlura.model;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
+import java.util.List;
 
 @Entity
-@Table(name = "Autor")
+@Table(name = "autores")
 public class Autor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idAutor;
 
-    @Column(name = "nombreAutor")
+    @Column(unique = true)
     private String nombreAutor;
+    private Integer anioDeNacimiento;
+    private Integer anioDeFallecimiento;
 
-    @Column(name = "fechaDeNacimiento")
-    private LocalDate fechaDeNacimiento;
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Libro> libros;
 
-    @Column(name = "fechaDeFallecimiento")
-    private LocalDate fechaDeFallecimiento;
+    public Autor(DatosAutor datosAutor){
+        this.nombreAutor = datosAutor.nombreAutor();
+        this.anioDeNacimiento = datosAutor.fechaDeNacimiento();
+        this.anioDeFallecimiento = datosAutor.fechaDeFallecimiento();
+    }
+
+    public Autor(){
+
+    }
+
+    public Long getIdAutor() {
+        return idAutor;
+    }
+
+    public void setIdAutor(Long idAutor) {
+        this.idAutor = idAutor;
+    }
 
     public String getNombreAutor() {
         return nombreAutor;
@@ -28,27 +45,28 @@ public class Autor {
         this.nombreAutor = nombreAutor;
     }
 
-    public LocalDate getFechaDeNacimiento() {
-        return fechaDeNacimiento;
+    public Integer getAnioDeNacimiento() {
+        return anioDeNacimiento;
     }
 
-    public void setFechaDeNacimiento(LocalDate fechaDeNacimiento) {
-        this.fechaDeNacimiento = fechaDeNacimiento;
+    public void setAnioDeNacimiento(Integer anioDeNacimiento) {
+        this.anioDeNacimiento = anioDeNacimiento;
     }
 
-    public LocalDate getFechaDeFallecimiento() {
-        return fechaDeFallecimiento;
+    public Integer getAnioDeFallecimiento() {
+        return anioDeFallecimiento;
     }
 
-    public void setFechaDeFallecimiento(LocalDate fechaDeFallecimiento) {
-        this.fechaDeFallecimiento = fechaDeFallecimiento;
+    public void setAnioDeFallecimiento(Integer anioDeFallecimiento) {
+        this.anioDeFallecimiento = anioDeFallecimiento;
     }
 
-    public Long getId() {
-        return id;
+    public List<Libro> getLibros() {
+        return libros;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setLibros(List<Libro> libros) {
+        libros.forEach(l -> l.setAutor(this));
+        this.libros = libros;
     }
 }
