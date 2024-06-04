@@ -44,7 +44,7 @@ public class Principal {
                     |   3 - Listar Autores Registrados                  |
                     |   4 - Listar Autores Vivos en un determinado Año  |
                     |   5 - Listar Libros por Idioma                    |
-                    |   6 - Los 5 libros más descargados                |
+                    |   6 - Los 10 libros más descargados                |
                     |                                                   |
                     |   0 - Salir                                       |
                     +---------------------------------------------------+
